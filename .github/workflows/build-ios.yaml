@@ -1,0 +1,62 @@
+name: Build Final Flutter App
+
+on: workflow_dispatch
+
+jobs:
+  build_ios:
+        name: Build IOS
+        runs-on: macos-latest
+
+        steps:
+          - uses: actions/checkout@v3
+          - uses: subosito/flutter-action@v2
+            with:
+              flutter-version: '3.19.0'
+          - run: ls -la && flutter pub get
+          - run: flutter pub cache repair
+          - run: flutter build ios --release --no-codesign
+          - name: Create IPA
+            run: |
+              cd build/ios/iphoneos
+              mkdir Payload
+              cp -r Runner.app Payload
+              zip -r NorSe.ipa Payload
+          - name: Upload binary
+            uses: actions/upload-artifact@v4
+            with:
+              name: ios-app
+              path: build/ios/iphoneos/blackhole.ipa
+
+  upload-release:
+    permissions: write-all
+    needs: [build_ios]
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Read version from pubspec.yaml
+        id: version
+        run: |
+          VERSION=$(grep 'version:' pubspec.yaml | sed 's/version: //')
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Download IOS IPA
+        uses: actions/download-artifact@v4
+        with:
+          name: ios-app
+          path: ./out/ios
+
+      - name: List output directory
+        run: ls -R ./out
+
+      - name: Upload Release
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        with:
+          files: |
+            ./out/ios/*
+          tag_name: ${{ steps.version.outputs.VERSION }}
+          draft: false
+          prerelease: false
