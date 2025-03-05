@@ -331,8 +331,7 @@ class _MainHomePageState extends State<MainHomePage> {
                                                       .withOpacity(0.7),
                                                   fontWeight:
                                                       FontWeight.normal),
-                                              Container
-                                               (
+                                              Container(
                                                  height:50;
                                                  width:40;
                                                  decoration: boxdecoration(
