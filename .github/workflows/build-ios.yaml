@@ -20,12 +20,12 @@ jobs:
               cd build/ios/iphoneos
               mkdir Payload
               cp -r Runner.app Payload
-              zip -r NorSe.ipa Payload
+              zip -r Nebula.ipa Payload
           - name: Upload binary
             uses: actions/upload-artifact@v4
             with:
               name: ios-app
-              path: build/ios/iphoneos/blackhole.ipa
+              path: build/ios/iphoneos/Nebula.ipa
 
   upload-release:
     permissions: write-all
