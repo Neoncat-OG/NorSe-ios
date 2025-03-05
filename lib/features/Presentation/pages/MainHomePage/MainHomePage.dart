@@ -332,12 +332,12 @@ class _MainHomePageState extends State<MainHomePage> {
                                                   fontWeight:
                                                       FontWeight.normal),
                                               Container(
-                                                 height:50,
-                                                 width:40,
-                                                 decoration: boxdecoration(
-                                                   border-radius:borderadius.circular(20)
-                                                 ),
-                                                child: Text("Try again")
+                                                 height: 50,
+                                                 width: 40,
+                                                 decoration: BoxDecoration(
+                                                     borderRadius:
+                                                         BorderRadius.circular(20)),
+                                                 child: Text("Try again")
                                               )
                                               Spaces.kheight20
                                             ],
