@@ -338,7 +338,7 @@ class _MainHomePageState extends State<MainHomePage> {
                                                      borderRadius:
                                                          BorderRadius.circular(20)),
                                                  child: Text("Try again")
-                                              )
+                                              ),
                                               Spaces.kheight20
                                             ],
                                           ),
